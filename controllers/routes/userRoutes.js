@@ -7,7 +7,7 @@ app.get("/api/userinfo", function(req, res) {
   });
 
 //Update user
-app.put("/api/customer", function(req, res) {
+app.put("/api/user", function(req, res) {
     db.User.update(
     req.body,
     {
@@ -27,12 +27,35 @@ app.put("/api/customer", function(req, res) {
         });
     });
 
+    //Pull a specific user
+app.get("/api/users/:id", function(req,res) {
+    db.User.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then(function(booksDb) {
+        res.json(booksDb);
+    });
+});
+
 //log out user
 app.get("/logout", function(req, res) {
     req.session.destroy(function(err) {
 
         res.redirect('/');
 
+    });
+});
+
+//delete user
+app.post("/deleteuser",function(req, res) {
+    console.log(req.body.id);
+    db.User.destroy({
+        where: {
+            id: req.body.id
+        }
+    }).then(function(user) {
+        res.json(user);
     });
 });
 

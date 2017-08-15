@@ -5,7 +5,19 @@ module.exports = function(app) {
 //Create Sale
 app.post("/api/sales", function(req, res) {
         db.Sales.create(req.body).then(function(sales) {
-            res.json(sales);
+            var addTransaction = {
+                id: req.user.id,
+                transaction_counter: req.user.transaction_counter + 1
+            }
+            db.User.update(
+                addTransaction,
+                {
+                    where: {
+                        id: addTransaction.id
+                    }
+                }).then(function(response) {
+                    res.json(response);
+            });
         });
     });
 //Get All sales

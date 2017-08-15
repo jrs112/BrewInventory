@@ -1,29 +1,29 @@
 module.exports = function(app, passport) {
 
-    app.get("/inventoryadjust", isAdmin, function(req, res) {
+    app.get("/inventoryadjust",isLoggedIn, isAdmin, function(req, res) {
         res.render("inventoryadjust");
     });
 
-    app.get("/receipts", isReceipts, function(req, res) {
+    app.get("/receipts",isLoggedIn, isReceipts, function(req, res) {
         res.render("receipts");
     });
 
-    app.get("/sales", isSales, function(req, res) {
+    app.get("/sales",isLoggedIn, isSales, function(req, res) {
         res.render("sales");
     });
 
-    app.get("/vendor", isReceipts, function(req, res) {
+    app.get("/vendor",isLoggedIn, isReceipts, function(req, res) {
         res.render("vendor");
     });
 
-    app.get("/beers", isAdmin, function(req, res) {
+    app.get("/beers",isLoggedIn, isAdmin, function(req, res) {
         res.render("beers");
     });
 
     app.get("/dashboard", isLoggedIn, function(req, res) {
         res.render("dashboard");
     });
-    app.get("/user", isAdmin, function(req, res) {
+    app.get("/user",isLoggedIn, isAdmin, function(req, res) {
         res.render("users");
     });
     app.get("/", function(req, res) {

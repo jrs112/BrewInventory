@@ -55,7 +55,9 @@ passport.use('user-local-signup', new LocalStrategy(
 
                         last_name: req.body.lastName,
 
-                        role: "admin"
+                        role: "admin",
+
+                        main_admin: true
 
                     };
 

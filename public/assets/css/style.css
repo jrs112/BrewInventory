@@ -30,7 +30,7 @@ button {
 }
 
 .container {
-	
+
 	width: 100%;
 	padding: 30px;
 }
@@ -63,4 +63,44 @@ th {
 
 .panel-body {
 	background-color: none;
+}
+
+.header {
+    text-align: center;
+}
+
+/*Update Users*/
+#signInDisplay,
+#signInHeader {
+    margin-top: 150px;
+}
+
+
+/*Update Users*/
+.userPanel {
+    margin-top: 10px;
+}
+
+.updateBtn {
+    margin-right: 15px;
+    margin-top: 0px;
+}
+.deleteBtn {
+    margin-top: 0px;
+}
+
+.tableRowHeadStyle,
+.tableRowStyle {
+    padding: 5px;
+    border-bottom-color: silver;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+
+}
+.updateUserBtn {
+    margin-right: 15px;
+}
+
+.tablePanel {
+    background-color: rgba(174, 151, 128, 0.5);
 }

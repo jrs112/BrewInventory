@@ -22,6 +22,15 @@ module.exports = function(sequelize, DataTypes) {
     role: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    main_admin: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+    },
+
+    transaction_counter: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
 });
     return User;

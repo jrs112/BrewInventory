@@ -1,3 +1,5 @@
+$(document).ready(function() {
+
 $(".mainNavBar").empty();
 
 $.get("/api/users", function(req) {
@@ -16,3 +18,4 @@ $.get("/api/users", function(req) {
 
 
 
+});

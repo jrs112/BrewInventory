@@ -7,11 +7,20 @@ $.get("/api/recipe", function(req) {
 
 $("#submit-sales").on("click", function() {
     $("#salesMessage").empty();
+    $.get("/api/userinfo", function(user) {
     var chosenItem = $("#beerType").val().trim();
     var pintsSold = $("#pintsSold").val().trim();
+    var transactionId = user.id.toString() + user.transaction_counter.toString();
+    var transactionInfo = {
+        "transaction_id": transactionId,
+        "transaction_type": "Sale",
+        "UserId": user.id
+    }
     var salesInfo = {
         "item_sold": chosenItem,
-        "total_sales_units": pintsSold
+        "total_sales_units": pintsSold,
+        "UserId": user.id,
+        "sale_id": transactionId
     };
     var ingredientOne = {};
     var ingredientTwo = {};
@@ -19,6 +28,7 @@ $("#submit-sales").on("click", function() {
     var ingredientFour = {};
     var ingredientFive = {};
     var ingredientSix = {};
+        console.log(user);
     $.get("/api/recipe", function(request) {
         $.get("/api/ingredients", function(data) {
             for (var i = 0; i < request.length; i++) {
@@ -31,7 +41,16 @@ $("#submit-sales").on("click", function() {
                                 var newIngredientOneAmt = data[j].quantity - ingredientOneAdjust;
                                 ingredientOne["id"] = data[j].id;
                                 ingredientOne["quantity"] = newIngredientOneAmt;
+                                salesInfo["ingredient_one"] = data[j].ingredient;
+                                salesInfo["amount_one_start"] = data[j].quantity;
+                                salesInfo["amount_one_deducted"] = ingredientOneAdjust;
+                                salesInfo["amount_one_end"] = newIngredientOneAmt;
+                                transactionInfo["ingredient"] = data[j].ingredient;
+                                transactionInfo["start_amount"] = data[j].quantity;
+                                transactionInfo["amount_changed"] = -ingredientOneAdjust;
+                                transactionInfo["end_amount"] = newIngredientOneAmt;
                                 updateIngredient(ingredientOne);
+                                createTransaction(transactionInfo);
                             }
                         }
                     }
@@ -43,7 +62,16 @@ $("#submit-sales").on("click", function() {
                                 var newIngredientTwoAmt = data[j].quantity - ingredientTwoAdjust;
                                 ingredientTwo["id"] = data[j].id;
                                 ingredientTwo["quantity"] = newIngredientTwoAmt;
+                                salesInfo["ingredient_two"] = data[j].ingredient;
+                                salesInfo["amount_two_start"] = data[j].quantity;
+                                salesInfo["amount_two_deducted"] = ingredientTwoAdjust;
+                                salesInfo["amount_two_end"] = newIngredientTwoAmt;
+                                transactionInfo["ingredient"] = data[j].ingredient;
+                                transactionInfo["start_amount"] = data[j].quantity;
+                                transactionInfo["amount_changed"] = -ingredientTwoAdjust;
+                                transactionInfo["end_amount"] = newIngredientTwoAmt;
                                 updateIngredient(ingredientTwo);
+                                createTransaction(transactionInfo);
                             }
                         }
                     }
@@ -55,7 +83,16 @@ $("#submit-sales").on("click", function() {
                                 var newIngredientThreeAmt = data[j].quantity - ingredientThreeAdjust;
                                 ingredientThree["id"] = data[j].id;
                                 ingredientThree["quantity"] = newIngredientThreeAmt;
+                                salesInfo["ingredient_three"] = data[j].ingredient;
+                                salesInfo["amount_three_start"] = data[j].quantity;
+                                salesInfo["amount_three_deducted"] = ingredientThreeAdjust;
+                                salesInfo["amount_three_end"] = newIngredientThreeAmt;
+                                transactionInfo["ingredient"] = data[j].ingredient;
+                                transactionInfo["start_amount"] = data[j].quantity;
+                                transactionInfo["amount_changed"] = -ingredientThreeAdjust;
+                                transactionInfo["end_amount"] = newIngredientThreeAmt;
                                 updateIngredient(ingredientThree);
+                                createTransaction(transactionInfo);
                             }
                         }
                     }
@@ -67,7 +104,16 @@ $("#submit-sales").on("click", function() {
                                 var newIngredientFourAmt = data[j].quantity - ingredientFourAdjust;
                                 ingredientFour["id"] = data[j].id;
                                 ingredientFour["quantity"] = newIngredientFourAmt;
+                                salesInfo["ingredient_four"] = data[j].ingredient;
+                                salesInfo["amount_four_start"] = data[j].quantity;
+                                salesInfo["amount_four_deducted"] = ingredientFourAdjust;
+                                salesInfo["amount_four_end"] = newIngredientFourAmt;
+                                transactionInfo["ingredient"] = data[j].ingredient;
+                                transactionInfo["start_amount"] = data[j].quantity;
+                                transactionInfo["amount_changed"] = -ingredientFourAdjust;
+                                transactionInfo["end_amount"] = newIngredientFourAmt;
                                 updateIngredient(ingredientFour);
+                                createTransaction(transactionInfo);
                             }
                         }
                     }
@@ -79,7 +125,16 @@ $("#submit-sales").on("click", function() {
                                 var newIngredientFiveAmt = data[j].quantity - ingredientFiveAdjust;
                                 ingredientFive["id"] = data[j].id;
                                 ingredientFive["quantity"] = newIngredientFiveAmt;
+                                salesInfo["ingredient_five"] = data[j].ingredient;
+                                salesInfo["amount_five_start"] = data[j].quantity;
+                                salesInfo["amount_five_deducted"] = ingredientFiveAdjust;
+                                salesInfo["amount_five_end"] = newIngredientFiveAmt;
+                                transactionInfo["ingredient"] = data[j].ingredient;
+                                transactionInfo["start_amount"] = data[j].quantity;
+                                transactionInfo["amount_changed"] = -ingredientFiveAdjust;
+                                transactionInfo["end_amount"] = newIngredientFiveAmt;
                                 updateIngredient(ingredientFive);
+                                createTransaction(transactionInfo);
                             }
                         }
                     }
@@ -91,15 +146,25 @@ $("#submit-sales").on("click", function() {
                                 var newIngredientSixAmt = data[j].quantity - ingredientSixAdjust;
                                 ingredientSix["id"] = data[j].id;
                                 ingredientSix["quantity"] = newIngredientSixAmt;
+                                salesInfo["ingredient_six"] = data[j].ingredient;
+                                salesInfo["amount_six_start"] = data[j].quantity;
+                                salesInfo["amount_six_deducted"] = ingredientSixAdjust;
+                                salesInfo["amount_six_end"] = newIngredientSixAmt;
+                                transactionInfo["ingredient"] = data[j].ingredient;
+                                transactionInfo["start_amount"] = data[j].quantity;
+                                transactionInfo["amount_changed"] = -ingredientSixAdjust;
+                                transactionInfo["end_amount"] = newIngredientSixAmt;
                                 updateIngredient(ingredientSix);
+                                createTransaction(transactionInfo);
                             }
                         }
                     }
                 }
             }
+        createSale(salesInfo);
         });
     });
-    createSale(salesInfo);
+});
 });
 
 
@@ -133,6 +198,19 @@ function createSale(info) {
     })
     .done(function() {
         console.log("Yay Created");
+        $("#salesMessage").html("<p>Submission Successful!</p>")
+        $("#pintsSold").val("");
+    });
+}
+
+function createTransaction(info) {
+    $.ajax({
+      method: "POST",
+      url: "/api/transaction",
+      data: info
+    })
+    .done(function() {
+        console.log("Yay Created Transaction");
         $("#salesMessage").html("<p>Submission Successful!</p>")
         $("#pintsSold").val("");
     });

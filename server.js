@@ -44,6 +44,7 @@ require("./controllers/routes/htmlRoutes.js")(app, passport);
 require("./controllers/routes/ingredientRoutes.js")(app);
 require("./controllers/routes/salesRoutes.js")(app);
 require("./controllers/routes/userRoutes.js")(app);
+require("./controllers/routes/transactionRoutes.js")(app);
 //load passport strategies
 require('./config/passport.js')(passport);
 
