@@ -9,7 +9,7 @@
 		<div class = "col-md-6">
 			<div class="container" id = "form-container">
 				<h3>Use the form below to record received inventory for the week</h3>
-					<form method="post" action="/api/receipt">
+					<form>
 						<div class = "row">
 							<div class = "col-md-6">
 
@@ -29,7 +29,9 @@
 				              		<select type="text" class = "form-control" name = "vendorname" id="vendor-input"></select>
 				              	</div>
 
-				              	<button class="btn btn-danger" type="submit"id = "submitReceipt">Receive Ingredient</button>
+				              	<button class="btn btn-danger" id = "submitReceipt">Receive Ingredient</button>
+
+				              	<div id="receiptMessage"></div>
 
 
 				            </div>

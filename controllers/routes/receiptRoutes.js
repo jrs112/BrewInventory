@@ -9,13 +9,20 @@ module.exports = function(app) {
 });//end of find all
   //Create Reciept of goods for a user
 	app.post("/api/receipt", function(req, res) {
-    db.Receipt.create({
-      ingredient: req.body.ingredient,
-      quantity: req.body.quantity,
-      VendorMasterId: req.body.vendorname
-
-    }).then(function(recipe) {
-            res.redirect("/receipts");
+    db.Receipt.create(req.body).then(function(receipt) {
+      var addTransaction = {
+                id: req.user.id,
+                transaction_counter: req.user.transaction_counter + 1
+            }
+            db.User.update(
+                addTransaction,
+                {
+                    where: {
+                        id: addTransaction.id
+                    }
+                }).then(function(response) {
+                    res.json(response);
+            });
     });
 
   });//end of create

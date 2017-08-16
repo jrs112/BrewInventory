@@ -7,24 +7,21 @@
         <h1>Inventory Dashboard</h1>
       </div>
 
-      <div class = "col-md-6">      
+      <div class = "col-md-6">
+        <div id="tableOptions">
+        <button id="currentInventoryBtn" class="btn btn-primary">Current Inventory</button>
+        <button id="futureInventoryBtn" class="btn btn-primary">Future Inventory</button></div>
         <div class="panel" id = "form-container">
             <div class = "panel-heading">
-              <h1 class="panel-title"><strong>Current Ingredients!</strong></h1>
+              <h1 class="panel-title"><strong><span id="tableTitle"></span></strong></h1>
+              <h3 class="panel-title"><strong><span id="tableSubHead"></span></strong></h3>
             </div>
 
             <div class="panel-body">
               <div class="well">
-                <table id="currentIngredients" class="table">
-                  <tr>
-                    <th><strong>Ingredient</strong></th>
-                    <th><strong>Current Quantity(lbs)</strong></th>
-                    <th><strong>Below 100</strong></th>
-                    <th><strong>Below 0</th>
-                    <th><strong>Recent Loss Note</strong></th>
-                  </tr>
+                <table id="dashboardDisplay" class="table">
                 </table>
-              </div>  
+              </div>
             </div>
         </div>
       </div>

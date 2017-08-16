@@ -4,6 +4,10 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING,
       allowNull: false
     },
+    projected_sales: {
+      type:DataTypes.FLOAT,
+      allowNull: false
+    },
     ingredient_one: {
       type: DataTypes.STRING,
       allowNull: false

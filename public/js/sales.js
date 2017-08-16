@@ -38,13 +38,16 @@ $("#submit-sales").on("click", function() {
                         console.log(ingredientOneAdjust);
                         for (var j = 0; j < data.length; j++) {
                             if (request[i].ingredient_one == data[j].ingredient) {
+                                //update ingredient table info
                                 var newIngredientOneAmt = data[j].quantity - ingredientOneAdjust;
                                 ingredientOne["id"] = data[j].id;
                                 ingredientOne["quantity"] = newIngredientOneAmt;
+                                //update sales table info
                                 salesInfo["ingredient_one"] = data[j].ingredient;
                                 salesInfo["amount_one_start"] = data[j].quantity;
                                 salesInfo["amount_one_deducted"] = ingredientOneAdjust;
                                 salesInfo["amount_one_end"] = newIngredientOneAmt;
+                                //update transaction table info
                                 transactionInfo["ingredient"] = data[j].ingredient;
                                 transactionInfo["start_amount"] = data[j].quantity;
                                 transactionInfo["amount_changed"] = -ingredientOneAdjust;
@@ -211,7 +214,6 @@ function createTransaction(info) {
     })
     .done(function() {
         console.log("Yay Created Transaction");
-        $("#salesMessage").html("<p>Submission Successful!</p>")
         $("#pintsSold").val("");
     });
 }

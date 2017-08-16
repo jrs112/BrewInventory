@@ -104,3 +104,18 @@ th {
 .tablePanel {
     background-color: rgba(174, 151, 128, 0.5);
 }
+
+
+/*Dashboard page*/
+/*Current Inventory Table Buttons*/
+.dangerLevel {
+    background: yellow;
+}
+
+.belowZero {
+    background: red;
+}
+
+.warningLevel {
+  background: orange;
+}

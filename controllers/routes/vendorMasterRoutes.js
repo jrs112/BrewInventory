@@ -21,7 +21,7 @@ module.exports = function(app) {
       state: req.body.state,
       zip: req.body.zip
     }).then(function(vendors) {
-      res.render("vendor");
+      res.redirect("/vendor");
     });
 
   });//end of create

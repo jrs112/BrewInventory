@@ -1,5 +1,9 @@
 module.exports = function(sequelize, DataTypes) {
-  var Ingredient = sequelize.define("Ingredient", {
+  var Extra = sequelize.define("Extra", {
+    receipt_id: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     ingredient: {
       type: DataTypes.STRING,
       allowNull: false
@@ -8,9 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.FLOAT,
       allowNull: false
     }
-  },{
-    timestamps: false
   });
 
-  return Ingredient;
+  return Extra;
 };

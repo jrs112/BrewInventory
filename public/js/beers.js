@@ -7,6 +7,7 @@ displayCurrentRecipes();
 $("#submitBeer").on("click", function(event) {
     event.preventDefault();
     var beerName = $("#beerName").val().trim();
+    var projectedSales = $("#beerSales").val().trim();
     var ingredientOne = $("#ingredient1").val().trim();
     var qtyOne = $("#qt1").val().trim();
     var ingredientTwo = $("#ingredient2").val().trim();
@@ -22,6 +23,7 @@ $("#submitBeer").on("click", function(event) {
 
     beerInfo = {
          item: beerName,
+         projected_sales: projectedSales,
          ingredient_one: ingredientOne,
          quantity_one: qtyOne
     };
@@ -96,6 +98,7 @@ function createIngredient(info) {
 
 function emptyForm() {
    $("#beerName").val("");
+   $("#beerSales").val("");
    $("#ingredient1").val("None");
    $("#qt1").val("");
    $("#ingredient2").val("None");
