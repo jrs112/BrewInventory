@@ -2,11 +2,15 @@ var db = require("../../models");
 
 module.exports = function(app) {
     //find all the entrys in the reciept db
-    app.get("/api/receipt", function(req, res) {
-    db.receipt.findAll().then(function(brew_db) {
-      res.json(brew_db);
+     app.get("/api/receipt", function(req, res) {
+        var query = {};
+        db.Receipt.findAll({
+          include: [db.User, db.VendorMaster],
+          where: query
+        }).then(function(teams) {
+            res.json(teams);
+        });
     });
-});//end of find all
   //Create Reciept of goods for a user
 	app.post("/api/receipt", function(req, res) {
     db.Receipt.create(req.body).then(function(receipt) {

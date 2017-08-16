@@ -10,7 +10,11 @@ app.post("/api/transaction", function(req, res) {
     });
 //Get All Transaction
  app.get("/api/transaction", function(req, res) {
-        db.Transaction.findAll().then(function(transaction) {
+        var query= {};
+        db.Transaction.findAll({
+            include: [db.User],
+            where: query
+        }).then(function(transaction) {
             res.json(transaction);
         });
     });

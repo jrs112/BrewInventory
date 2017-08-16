@@ -2,6 +2,101 @@ $.get("/api/userinfo", function(req) {
   console.log(req);
 });
 currentInventory();
+
+$("#myTransactions").on("click", myTransactions);
+
+//Display My Transactions Table:
+function myTransactions() {
+  $("#dashboardDisplay").empty();
+  $("#tableSubHead").empty();
+  $("#tableTitle").html("<h2>My Transactions</h2>")
+  var tableRowHead = $("<tr>");
+  // transaction Id column head
+  var transactionIdHead = $("<th>");
+  transactionIdHead.addClass("tableRowHeadStyle");
+  transactionIdHead.text("Transaction ID");
+  tableRowHead.append(transactionIdHead);
+  // transaction type column head
+  var typeHead = $("<th>");
+  typeHead.addClass("tableRowHeadStyle");
+  typeHead.text("Transaction Type");
+  tableRowHead.append(typeHead);
+  // ingredient column head
+  var ingredientHead = $("<th>");
+  ingredientHead.addClass("tableRowHeadStyle");
+  ingredientHead.text("Ingredient");
+  tableRowHead.append(ingredientHead);
+  // start amount column head
+  var startHead = $("<th>");
+  startHead.addClass("tableRowHeadStyle");
+  startHead.text("Start Amount");
+  tableRowHead.append(startHead);
+  // change amount column head
+  var changeHead = $("<th>");
+  changeHead.addClass("tableRowHeadStyle");
+  changeHead.text("Amount Changed");
+  tableRowHead.append(changeHead);
+  // end amount column head
+  var endHead = $("<th>");
+  endHead.addClass("tableRowHeadStyle");
+  endHead.text("End Amount");
+  tableRowHead.append(endHead);
+
+  $("#dashboardDisplay").append(tableRowHead);
+
+  //Display Ingredient Table
+$.get("/api/userinfo", function(req) {
+$.get("/api/transaction", function(request) {
+
+  console.log(request);
+  for (var i = 0; i < request.length; i++) {
+    if (req.id == request[i].UserId) {
+    var tableRow = $("<tr>");
+    //add transaction ID column
+    var transactionId = $("<td>");
+    transactionId.addClass("tableRowStyle");
+    transactionId.text(request[i].transaction_id);
+    tableRow.append(transactionId);
+    // Transaction Type
+    var type = $("<td>");
+    type.addClass("tableRowStyle");
+    type.text(request[i].transaction_type);
+    tableRow.append(type);
+    // Ingredient Type
+    var ingredient = $("<td>");
+    ingredient.addClass("tableRowStyle");
+    ingredient.text(request[i].ingredient);
+    tableRow.append(ingredient);
+
+      //Start Amount
+    var start = $("<td>");
+    start.addClass("tableRowStyle");
+    start.text(request[i].start_amount);
+    tableRow.append(start);
+
+
+     //Changed Amount
+    var changed = $("<td>");
+    changed.addClass("tableRowStyle");
+    changed.text(request[i].amount_changed);
+    tableRow.append(changed);
+
+     //End Amount
+    var end = $("<td>");
+    end.addClass("tableRowStyle");
+    end.text(request[i].end_amount);
+    tableRow.append(end);
+
+    $("#dashboardDisplay").append(tableRow);
+    // focus on table display
+    // document.location.href = "#dashboardDisplay";
+  }
+  }
+});
+});
+} //End My Transactions
+
+
 //Display Current Inventory Table
 $("#currentInventoryBtn").on("click", currentInventory);
 
@@ -110,6 +205,7 @@ $("#futureInventoryBtn").on("click", futureInventory);
 
 function displayFutureHeader() {
   $.get("/api/recipe", function(req) {
+  $.get("/api/userinfo", function(user) {
     $("#tableSubHead").append("<h3>Current Projected Weekly Sales: </h3>");
     for (var i = 0; i < req.length; i++) {
       var recipe = $("<span>");
@@ -118,34 +214,37 @@ function displayFutureHeader() {
       $("#recipeSales-" + i).append("<span class='updateSale' data-id='" + req[i].id + "' data-sales='" + req[i].projected_sales + "' data-item='" + req[i].item + "'>" + req[i].item + ": " + req[i].projected_sales + ", </span>");
     }
 
-    $(".updateSale").on("click", function() {
-      $("#tableSubHead").empty();
-      var updateDisplay = $("<div>");
-      updateDisplay.addClass("well");
-      updateDisplay.attr("id", "updateSalesWell");
-      var selectedItem = {
-        "projectedSale": $(this).attr("data-sales"),
-        "item": $(this).attr("data-item"),
-        "id": $(this).attr("data-id")
-      };
-
-      $("#tableSubHead").append(updateDisplay);
-      $("#updateSalesWell").append("<h3>Update Weekly Projected Sales for " + selectedItem.item +
-                                  " (currently: " + selectedItem.projectedSale + ")</h3>" +
-                                  "<div class='form-group'> <label>New Weekly Sales Amount (pints):  </label> <input type='text' size='3' id='newSalesAmt'></div>" +
-                                  "<button id='submitUpdate' class='btn btn-primary'>Update</button><button id='cancelSaleUpdate' class='btn btn-warning'>Back</button>");
-
-      $("#submitUpdate").on("click", function() {
-        var updateSalesInfo = {
-          id: selectedItem.id,
-          projected_sales: $("#newSalesAmt").val().trim()
+    if(user.role == "admin") {
+      $(".updateSale").on("click", function() {
+        $("#tableSubHead").empty();
+        var updateDisplay = $("<div>");
+        updateDisplay.addClass("well");
+        updateDisplay.attr("id", "updateSalesWell");
+        var selectedItem = {
+          "projectedSale": $(this).attr("data-sales"),
+          "item": $(this).attr("data-item"),
+          "id": $(this).attr("data-id")
         };
-        updateFutureRecipe(updateSalesInfo);
+
+        $("#tableSubHead").append(updateDisplay);
+        $("#updateSalesWell").append("<h3>Update Weekly Projected Sales for " + selectedItem.item +
+                                    " (currently: " + selectedItem.projectedSale + ")</h3>" +
+                                    "<div class='form-group'> <label>New Weekly Sales Amount (pints):  </label> <input type='text' size='3' id='newSalesAmt'></div>" +
+                                    "<button id='submitUpdate' class='btn btn-primary'>Update</button><button id='cancelSaleUpdate' class='btn btn-warning'>Back</button>");
+
+        $("#submitUpdate").on("click", function() {
+          var updateSalesInfo = {
+            id: selectedItem.id,
+            projected_sales: $("#newSalesAmt").val().trim()
+          };
+          updateFutureRecipe(updateSalesInfo);
+        });
+
+        $("#cancelSaleUpdate").on("click", futureInventory);
+
       });
-
-      $("#cancelSaleUpdate").on("click", futureInventory);
-
-    });
+    }
+});
 });
 }
 
@@ -472,6 +571,8 @@ $.get("/api/ingredients", function(request) {
 });
 });
 } //End of Future Inventory Function
+
+
 
 
 

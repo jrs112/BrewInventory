@@ -22,7 +22,11 @@ app.post("/api/sales", function(req, res) {
     });
 //Get All sales
  app.get("/api/sales", function(req, res) {
-        db.Sales.findAll().then(function(sales) {
+        var query = {};
+        db.Sales.findAll({
+            include: [db.User],
+            where: query
+        }).then(function(sales) {
             res.json(sales);
         });
     });
