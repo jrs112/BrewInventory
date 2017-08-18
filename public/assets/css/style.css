@@ -107,7 +107,12 @@ th {
 
 
 /*Dashboard page*/
-/*Current Inventory Table Buttons*/
+
+#inventoryPageHead {
+  font-size: 100px;
+}
+
+/*Current Inventory and Future inventory Table(on Dashboard)*/
 .dangerLevel {
     background: yellow;
 }
@@ -119,3 +124,4 @@ th {
 .warningLevel {
   background: orange;
 }
+
