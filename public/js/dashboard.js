@@ -1,19 +1,466 @@
 $.get("/api/userinfo", function(req) {
   console.log(req);
+  if (req.role == "admin") {
+    $("#tableOptions").append("<button id='allTransactions' class='btn btn-primary dashboardBtn'>All Transactions</button>");
+    $("#tableOptions").append("<button id='allLosses' class='btn btn-primary dashboardBtn'>All Losses</button>");
+    $("#tableOptions").append("<button id='allSales' class='btn btn-primary dashboardBtn'>All Sales</button>");
+    $("#tableOptions").append("<button id='allReceipts' class='btn btn-primary dashboardBtn'>All Receipts</button>");
+  }
+    $("#tableOptions").append("<button id='myTransactions' class='btn btn-primary dashboardBtn'>My Transactions</button>")
   if (req.role == "admin" || req.role == "sales") {
-    $("#tableOptions").append("<button id='mySales' class='btn btn-primary'>My Sales</button>");
+    $("#tableOptions").append("<button id='mySales' class='btn btn-primary dashboardBtn'>My Sales</button>");
   }
   if (req.role == "admin" || req.role == "receipts") {
-    $("#tableOptions").append("<button id='myReceipts' class='btn btn-primary'>My Receipts</button>");
+    $("#tableOptions").append("<button id='myReceipts' class='btn btn-primary dashboardBtn'>My Receipts</button>");
   }
-  if (req.role == "admin") {
-    $("#tableOptions").append("<button id='allTransactions' class='btn btn-primary'>All Transactions</button>");
-  }
+
+  $("#currentInventoryBtn").on("click", currentInventory);
+  $("#futureInventoryBtn").on("click", futureInventory);
+  $("#myTransactions").on("click", myTransactions);
   $("#mySales").on("click", mySales);
   $("#myReceipts").on("click", myReceipts);
   $("#allTransactions").on("click", allTransactions);
+  $("#allLosses").on("click", allLosses);
+  $("#allSales").on("click", allSales);
+  $("#allReceipts").on("click", allReceipts);
 });
 currentInventory();
+
+function allReceipts() {
+  $("#dashboardDisplay").empty();
+  $("#tableSubHead").empty();
+  $("#tableTitle").html("<h2>All Receipt Transactions</h2>")
+  var tableRowHead = $("<tr>");
+  // transaction Id column head
+  var transactionIdHead = $("<th>");
+  transactionIdHead.addClass("tableRowHeadStyle");
+  transactionIdHead.text("ID");
+  tableRowHead.append(transactionIdHead);
+   // ingredient type column head
+  var userHead = $("<th>");
+  userHead.addClass("tableRowHeadStyle");
+  userHead.text("Entered By");
+  tableRowHead.append(userHead);
+  // ingredient type column head
+  var itemHead = $("<th>");
+  itemHead.addClass("tableRowHeadStyle");
+  itemHead.text("Ingredient");
+  tableRowHead.append(itemHead);
+  // Amount column head
+  var amountHead = $("<th>");
+  amountHead.addClass("tableRowHeadStyle");
+  amountHead.text("Amount(lbs)");
+  tableRowHead.append(amountHead);
+  // Vendor column head
+  var vendorHead = $("<th>");
+  vendorHead.addClass("tableRowHeadStyle");
+  vendorHead.text("Vendor");
+  tableRowHead.append(vendorHead);
+
+  //Display My Sales Table Body
+$.get("/api/userinfo", function(req) {
+$.get("/api/receipt", function(request) {
+
+  console.log(request);
+  for (var i = 0; i < request.length; i++) {
+    var tableRow = $("<tr>");
+    //add transaction ID column
+    var transactionId = $("<td>");
+    transactionId.addClass("tableRowStyle");
+    transactionId.text(request[i].receipt_id);
+    tableRow.append(transactionId);
+    // Entered By
+    var user = $("<td>");
+    user.addClass("tableRowStyle");
+    user.text(request[i].User.first_name + " " + request[i].User.last_name);
+    tableRow.append(user);
+    // Ingredient Received
+    var item = $("<td>");
+    item.addClass("tableRowStyle");
+    item.text(request[i].ingredient);
+    tableRow.append(item);
+    // Amount of Ingredients Received
+    var amount = $("<td>");
+    amount.addClass("tableRowStyle");
+    amount.text(request[i].quantity);
+    tableRow.append(amount);
+
+      //Vendor
+    var vendor = $("<td>");
+    vendor.addClass("tableRowStyle");
+    vendor.text(request[i].VendorMaster.vendorname);
+    tableRow.append(vendor);
+
+    $("#dashboardDisplay").prepend(tableRow);
+    $("#dashboardDisplay").prepend(tableRowHead);
+    // focus on table display
+    // document.location.href = "#dashboardDisplay";
+  }
+});
+});
+} //End All Receipts
+
+
+
+
+
+function allSales() {
+    $("#dashboardDisplay").empty();
+  $("#tableSubHead").empty();
+  $("#tableTitle").html("<h2>All Sales Transactions</h2>")
+  var tableRowHead = $("<tr>");
+  // transaction Id column head
+  var transactionIdHead = $("<th>");
+  transactionIdHead.addClass("tableRowHeadStyle");
+  transactionIdHead.text("ID");
+  tableRowHead.append(transactionIdHead);
+  // item sold type column head
+  var itemHead = $("<th>");
+  itemHead.addClass("tableRowHeadStyle");
+  itemHead.text("Beer");
+  tableRowHead.append(itemHead);
+  // pints sold column head
+  var pintsHead = $("<th>");
+  pintsHead.addClass("tableRowHeadStyle");
+  pintsHead.text("Pints");
+  tableRowHead.append(pintsHead);
+  // First ingredient column head
+  var firstIngredientHead = $("<th>");
+  firstIngredientHead.addClass("tableRowHeadStyle");
+  firstIngredientHead.text("Ingr.");
+  tableRowHead.append(firstIngredientHead);
+
+  // Change amount column head
+  var changeOneHead = $("<th>");
+  changeOneHead.addClass("tableRowHeadStyle");
+  changeOneHead.text("Amt");
+  tableRowHead.append(changeOneHead);
+
+    // Second ingredient  column head
+  var secondIngredientHead = $("<th>");
+  secondIngredientHead.addClass("tableRowHeadStyle");
+  secondIngredientHead.text("Ingr.");
+  tableRowHead.append(secondIngredientHead);
+
+  // change amount column head
+  var changeTwoHead = $("<th>");
+  changeTwoHead.addClass("tableRowHeadStyle");
+  changeTwoHead.text("Amt");
+  tableRowHead.append(changeTwoHead);
+
+      // Third ingredient  column head
+  var thirdIngredientHead = $("<th>");
+  thirdIngredientHead.addClass("tableRowHeadStyle");
+  thirdIngredientHead.text("Ingr.");
+  tableRowHead.append(thirdIngredientHead);
+
+  // change amount column head
+  var changeThreeHead = $("<th>");
+  changeThreeHead.addClass("tableRowHeadStyle");
+  changeThreeHead.text("Amt");
+  tableRowHead.append(changeThreeHead);
+
+      // Fourth ingredient  column head
+  var fourthIngredientHead = $("<th>");
+  fourthIngredientHead.addClass("tableRowHeadStyle");
+  fourthIngredientHead.text("Ingr.");
+  tableRowHead.append(fourthIngredientHead);
+
+  // change amount column head
+  var changeFourHead = $("<th>");
+  changeFourHead.addClass("tableRowHeadStyle");
+  changeFourHead.text("Amt");
+  tableRowHead.append(changeFourHead);
+
+      // Five ingredient  column head
+  var fifthIngredientHead = $("<th>");
+  fifthIngredientHead.addClass("tableRowHeadStyle");
+  fifthIngredientHead.text("Ingr.");
+  tableRowHead.append(fifthIngredientHead);
+
+  // change amount column head
+  var changeFiveHead = $("<th>");
+  changeFiveHead.addClass("tableRowHeadStyle");
+  changeFiveHead.text("Amt");
+  tableRowHead.append(changeFiveHead);
+
+      // Sixth ingredient  column head
+  var sixthIngredientHead = $("<th>");
+  sixthIngredientHead.addClass("tableRowHeadStyle");
+  sixthIngredientHead.text("Ingr.");
+  tableRowHead.append(sixthIngredientHead);
+  // change amount column head
+  var changeSixHead = $("<th>");
+  changeSixHead.addClass("tableRowHeadStyle");
+  changeSixHead.text("Amt");
+  tableRowHead.append(changeSixHead);
+
+
+  //Display My Sales Table Body
+$.get("/api/userinfo", function(req) {
+$.get("/api/sales", function(request) {
+
+  console.log(request);
+  for (var i = 0; i < request.length; i++) {
+    var tableRow = $("<tr>");
+    //add transaction ID column
+    var transactionId = $("<td>");
+    transactionId.addClass("tableRowStyle");
+    transactionId.text(request[i].sale_id);
+    tableRow.append(transactionId);
+    // Beer Sold
+    var item = $("<td>");
+    item.addClass("tableRowStyle");
+    item.text(request[i].item_sold);
+    tableRow.append(item);
+    // Amount of Pints Sold
+    var pints = $("<td>");
+    pints.addClass("tableRowStyle");
+    pints.text(request[i].total_sales_units);
+    tableRow.append(pints);
+
+      //First Ingredient
+    var ingredientOne = $("<td>");
+    ingredientOne.addClass("tableRowStyle");
+    ingredientOne.text(request[i].ingredient_one);
+    tableRow.append(ingredientOne);
+
+
+     //Changed Amount
+    var oneSoldAmt = $("<td>");
+    oneSoldAmt.addClass("tableRowStyle");
+    oneSoldAmt.text(Math.round(request[i].amount_one_deducted * 100)/100);
+    tableRow.append(oneSoldAmt);
+
+  if(request[i].ingredient_two != null) {
+      //Second Ingredient
+    var ingredientTwo = $("<td>");
+    ingredientTwo.addClass("tableRowStyle");
+    ingredientTwo.text(request[i].ingredient_two);
+    tableRow.append(ingredientTwo);
+  } else {
+    var ingredientTwo = $("<td>");
+    ingredientTwo.addClass("tableRowStyle");
+    ingredientTwo.text("");
+    tableRow.append(ingredientTwo);
+  }
+
+  if(request[i].ingredient_two != null) {
+     //Changed Amount
+    var twoSoldAmt = $("<td>");
+    twoSoldAmt.addClass("tableRowStyle");
+    twoSoldAmt.text(Math.round(request[i].amount_two_deducted * 100)/100);
+    tableRow.append(twoSoldAmt);
+  } else {
+    var twoSoldAmt = $("<td>");
+    twoSoldAmt.addClass("tableRowStyle");
+    twoSoldAmt.text("");
+    tableRow.append(twoSoldAmt);
+  }
+
+    if(request[i].ingredient_three != null) {
+      //Third Ingredient
+    var ingredientThree = $("<td>");
+    ingredientThree.addClass("tableRowStyle");
+    ingredientThree.text(request[i].ingredient_three);
+    tableRow.append(ingredientThree);
+  } else {
+    var ingredientThree = $("<td>");
+    ingredientThree.addClass("tableRowStyle");
+    ingredientThree.text("");
+    tableRow.append(ingredientThree);
+  }
+
+  if(request[i].ingredient_three != null) {
+     //Changed Amount
+    var threeSoldAmt = $("<td>");
+    threeSoldAmt.addClass("tableRowStyle");
+    threeSoldAmt.text(Math.round(request[i].amount_three_deducted * 100)/100);
+    tableRow.append(threeSoldAmt);
+  } else {
+    var threeSoldAmt = $("<td>");
+    threeSoldAmt.addClass("tableRowStyle");
+    threeSoldAmt.text("");
+    tableRow.append(threeSoldAmt);
+  }
+
+    if(request[i].ingredient_four != null) {
+      //Fourth Ingredient
+    var ingredientFour = $("<td>");
+    ingredientFour.addClass("tableRowStyle");
+    ingredientFour.text(request[i].ingredient_four);
+    tableRow.append(ingredientFour);
+  } else {
+    var ingredientFour = $("<td>");
+    ingredientFour.addClass("tableRowStyle");
+    ingredientFour.text("");
+    tableRow.append(ingredientFour);
+  }
+
+  if(request[i].ingredient_four != null) {
+     //Changed Amount
+    var fourSoldAmt = $("<td>");
+    fourSoldAmt.addClass("tableRowStyle");
+    fourSoldAmt.text(Math.round(request[i].amount_four_deducted * 100)/100);
+    tableRow.append(fourSoldAmt);
+  } else {
+    var fourSoldAmt = $("<td>");
+    fourSoldAmt.addClass("tableRowStyle");
+    fourSoldAmt.text("");
+    tableRow.append(fourSoldAmt);
+  }
+
+    if(request[i].ingredient_five != null) {
+      //Fifth Ingredient
+    var ingredientFive = $("<td>");
+    ingredientFive.addClass("tableRowStyle");
+    ingredientFive.text(request[i].ingredient_five);
+    tableRow.append(ingredientFive);
+  } else {
+    var ingredientFive = $("<td>");
+    ingredientFive.addClass("tableRowStyle");
+    ingredientFive.text("");
+    tableRow.append(ingredientFive);
+  }
+
+  if(request[i].ingredient_five != null) {
+     //Changed Amount
+    var fiveSoldAmt = $("<td>");
+    fiveSoldAmt.addClass("tableRowStyle");
+    fiveSoldAmt.text(Math.round(request[i].amount_five_deducted * 100)/100);
+    tableRow.append(fiveSoldAmt);
+  } else {
+    var fiveSoldAmt = $("<td>");
+    fiveSoldAmt.addClass("tableRowStyle");
+    fiveSoldAmt.text("");
+    tableRow.append(fiveSoldAmt);
+  }
+
+    if(request[i].ingredient_six != null) {
+      //Sixth Ingredient
+    var ingredientSix = $("<td>");
+    ingredientSix.addClass("tableRowStyle");
+    ingredientSix.text(request[i].ingredient_six);
+    tableRow.append(ingredientSix);
+  } else {
+    var ingredientSix = $("<td>");
+    ingredientSix.addClass("tableRowStyle");
+    ingredientSix.text("");
+    tableRow.append(ingredientSix);
+  }
+
+  if(request[i].ingredient_six != null) {
+     //Changed Amount
+    var sixSoldAmt = $("<td>");
+    sixSoldAmt.addClass("tableRowStyle");
+    sixSoldAmt.text(Math.round(request[i].amount_six_deducted * 100)/100);
+    tableRow.append(sixSoldAmt);
+  } else {
+    var sixSoldAmt = $("<td>");
+    sixSoldAmt.addClass("tableRowStyle");
+    sixSoldAmt.text("");
+    tableRow.append(sixSoldAmt);
+  }
+
+
+    $("#dashboardDisplay").prepend(tableRow);
+    $("#dashboardDisplay").prepend(tableRowHead);
+    // focus on table display
+    // document.location.href = "#dashboardDisplay";
+  }
+});
+});
+} //End all Sales
+
+
+function allLosses() {
+  $("#dashboardDisplay").empty();
+  $("#tableSubHead").empty();
+  $("#tableTitle").html("<h2>All Losses</h2>")
+  //header function
+  displayallTransHeader();
+  var tableRowHead = $("<tr>");
+  // transaction Id column head
+  var transactionIdHead = $("<th>");
+  transactionIdHead.addClass("tableRowHeadStyle");
+  transactionIdHead.text("ID");
+  tableRowHead.append(transactionIdHead);
+    // Entered By  column head
+  var userHead = $("<th>");
+  userHead.addClass("tableRowHeadStyle");
+  userHead.text("Entered By");
+  tableRowHead.append(userHead);
+  // ingredient column head
+  var ingredientHead = $("<th>");
+  ingredientHead.addClass("tableRowHeadStyle");
+  ingredientHead.text("Ingredient");
+  tableRowHead.append(ingredientHead);
+  // change amount column head
+  var changeHead = $("<th>");
+  changeHead.addClass("tableRowHeadStyle");
+  changeHead.text("Amount Changed");
+  tableRowHead.append(changeHead);
+  // end amount column head
+  var noteHead = $("<th>");
+  noteHead.addClass("tableRowHeadStyle");
+  noteHead.text("Loss Note");
+  tableRowHead.append(noteHead);
+
+  //Display Ingredient Table
+$.get("/api/userinfo", function(req) {
+$.get("/api/losses", function(request) {
+
+  console.log(request);
+  for (var i = 0; i < request.length; i++) {
+    var tableRow = $("<tr>");
+    //add transaction ID column
+    var transactionId = $("<td>");
+    transactionId.addClass("tableRowStyle");
+    transactionId.text(request[i].transaction_id);
+    tableRow.append(transactionId);
+    // Entered By
+    var type = $("<td>");
+    type.addClass("tableRowStyle");
+    type.text(request[i].User.first_name + " " + request[i].User.last_name);
+    tableRow.append(type);
+    // Transaction Type
+    var ingredient = $("<td>");
+    ingredient.addClass("tableRowStyle");
+    ingredient.text(request[i].ingredient);
+    tableRow.append(ingredient);
+    // Ingredient Type
+    var changed = $("<td>");
+    changed.addClass("tableRowStyle");
+    changed.text(request[i].quantity);
+    tableRow.append(changed);
+
+      //Start Amount
+    var note = $("<td>");
+    note.addClass("tableRowStyle");
+    note.text(request[i].note);
+    tableRow.append(note);
+
+
+     //Changed Amount
+    var changed = $("<td>");
+    changed.addClass("tableRowStyle");
+    changed.text(request[i].amount_changed);
+    tableRow.append(changed);
+
+     //End Amount
+    var end = $("<td>");
+    end.addClass("tableRowStyle");
+    end.text(request[i].end_amount);
+    tableRow.append(end);
+
+    $("#dashboardDisplay").prepend(tableRow);
+    $("#dashboardDisplay").prepend(tableRowHead);
+    // focus on table display
+    // document.location.href = "#dashboardDisplay";
+  }
+});
+});
+} //End All Losses
 
 //All Transactions Header
 function displayallTransHeader() {
@@ -581,9 +1028,6 @@ $.get("/api/sales", function(request) {
 } //End My Sales
 
 
-
-$("#myTransactions").on("click", myTransactions);
-
 //Display My Transactions Table:
 function myTransactions() {
   $("#dashboardDisplay").empty();
@@ -676,8 +1120,6 @@ $.get("/api/transaction", function(request) {
 
 
 //Display Current Inventory Table
-$("#currentInventoryBtn").on("click", currentInventory);
-
 
 function currentInventory() {
   $("#dashboardDisplay").empty();
@@ -779,7 +1221,7 @@ $.get("/api/ingredients", function(request) {
 
 
 //Display Future Table
-$("#futureInventoryBtn").on("click", futureInventory);
+
 
 function displayFutureHeader() {
   $.get("/api/recipe", function(req) {

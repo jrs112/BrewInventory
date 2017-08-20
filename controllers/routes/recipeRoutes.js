@@ -29,6 +29,17 @@ app.put("/api/recipe", function(req, res) {
     });
 });
 
+    //Pull a specific Recipe
+app.get("/api/recipe/:id", function(req,res) {
+    db.Recipe.findOne({
+        where: {
+            id: req.params.id
+        }
+    }).then(function(recipe) {
+        res.json(recipe);
+    });
+});
+
  // Delete Recipe
 app.post("/deleterecipe",function(req, res) {
     db.Recipe.destroy({

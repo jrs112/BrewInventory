@@ -13,7 +13,7 @@
 			<h3>Add a new beer recipe in the form below</h3>
 			<form>
 				<div class = "row">
-					<div class = "col-md-6">
+					<div class = "col-md-7">
 						<h3>Enter a New Beer Recipe</h3>
 						<div class = "form-group">
 		            		<label>Enter Your Beer Name </label>
@@ -69,7 +69,7 @@
 		              	</form>
 		              	<br>
 		            	</div>
-		            	<div class="col-md-6">
+		            	<div class="col-md-5">
 		            		<h3>Missing an Ingredient?</h3>
 							<form>
 								<div class = "form-group">
@@ -86,6 +86,21 @@
 	            	</div>
 	    	</div>
 	    </div>
+	</div>
+	<div class="row">
+		{{!-- <div class="col-md-1"></div> --}}
+		<div class="col-md-12">
+			<div class="userPanel panel panel-primary">
+             <div class = "panel-heading">
+                <h5 class="panel-title header"><strong>Current Recipes</strong></h5>
+            </div>
+            <div class="panel-body tablePanel">
+                  <table id="currentRecipeDisplay" class="table">
+                   </table>
+            </div>
+          </div>
+		</div>
+		{{!-- <div class="col-md-1"></div> --}}
 	</div>
 </div>
 

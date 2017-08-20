@@ -69,7 +69,7 @@ th {
     text-align: center;
 }
 
-/*Update Users*/
+/*Sign In*/
 #signInDisplay,
 #signInHeader {
     margin-top: 150px;
@@ -112,6 +112,10 @@ th {
   font-size: 100px;
 }
 
+.dashboardBtn {
+  margin-right: 7px;
+}
+
 /*Current Inventory and Future inventory Table(on Dashboard)*/
 .dangerLevel {
     background: yellow;
@@ -125,3 +129,7 @@ th {
   background: orange;
 }
 
+/*Create Recipe Page*/
+.updateRecBtn {
+  margin-right: 5px;
+}
