@@ -117,7 +117,7 @@ $.get("/api/users", function(request) {
               var wellSection = $("<div>");
               wellSection.attr("id", "userWell");
               $("#currentUsersDisplay").append(wellSection);
-              $("#userWell").append("<div class='col-md-3'></div><div class='col-md-6'><h2 class='header'>Update: " + data.first_name + " " + data.last_name + "</h2>" +
+              $("#userWell").append("<div class='col-md-3'></div><div class='col-md-6'><div class='well'><h2 class='header'>Update: " + data.first_name + " " + data.last_name + "</h2>" +
                                     "<h3 class='header'>Email: " + data.email + "</h3><h3 class='header'>Role: " + data.role + "</h3>" +
 
                                     "<div class='form-group'> <label>Update First Name: </label><input type='text' class='form-control' id='firstNameInfo'></div>" +
@@ -125,7 +125,7 @@ $.get("/api/users", function(request) {
                                     "<div class='form-group'> <label>Update Email: </label><input class='form-control' id='emailInfo'></div>" +
                                     "<div class='form-group'> <label>Update Role: </label><select id='userRoleInfo' class='form-control'><option value='noChange'>No Change</option>" +
                                     "<option value='admin'>Admin</option><option value='sales'>Sales</option><option value='receipts'>Receipts</option></select></div>" +
-                                    "<button class='btn btn-primary form-group updateUserBtn'>Update Account</button><button class='btn btn-warning form-group listBtn'>Back to Users Table</button></div><div class='col-md-3'></div>");
+                                    "<button class='btn btn-primary form-group updateUserBtn'>Update Account</button><button class='btn btn-warning form-group listBtn'>Back to Users Table</button></div></div><div class='col-md-3'></div>");
               // focus on current users
               document.location.href = "#currentUsersDisplay";
 

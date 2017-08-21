@@ -46,7 +46,13 @@ button {
 #form-container {
 	padding: 10px;
 	margin-top: 30px;
-	background-color: rgba(174, 151, 128, 0.7);
+	background-color: rgba(174, 151, 128, 0.9);
+}
+
+.hiddenContainer {
+  padding: 10px;
+  margin-top: 30px;
+  background-color: rgba(174, 151, 128, 0.9);
 }
 
 th {
@@ -116,6 +122,14 @@ th {
   margin-right: 7px;
 }
 
+#tableSubHead {
+  font-family: 'Lora', serif;
+}
+
+#submitUpdate {
+  margin-right: 5px;
+}
+
 /*Current Inventory and Future inventory Table(on Dashboard)*/
 .dangerLevel {
     background: yellow;
@@ -132,4 +146,10 @@ th {
 /*Create Recipe Page*/
 .updateRecBtn {
   margin-right: 5px;
+}
+.updateRecHeader {
+  font-family: 'Lora', serif;
+}
+#submitUpdateRecBtn {
+  margin-right: 7px;
 }

@@ -421,7 +421,7 @@ function allRecipes() {
         var wellSection = $("<div>");
         wellSection.attr("id", "recipeWell");
         $("#currentRecipeDisplay").append(wellSection);
-        $("#recipeWell").append("<div class='col-md-3'></div><div class='col-md-6'><h2 class='header'>Update: " + data.item + "</h2>" +
+        $("#recipeWell").append("<div class='col-md-3'></div><div class='col-md-6'><div class='well'><h2  class='updateRecHeader header'>Update: " + data.item + "</h2>" +
                               "<div class='form-group'> <label>Beer Name(currently: " + data.item + ") </label><input type='text' class='form-control' id='updateBeerName'></div>" +
                               "<div class='form-group'> <label>Projected Weekly Sales(currently: " + data.projected_sales + ") </label><input type='text' size='4' id='updateProjSales'></div>" +
                               "<div class='form-group'> <label>1st Ingredient(currently: " + data.ingredient_one + ") </label><select class='ingredUpdateType' id='updateIngredientOne'></select>" +
@@ -436,8 +436,8 @@ function allRecipes() {
                               "<label>Qty(currently: " + quantityFiveInfo + ")</label><input type='text' size='4' id='updateQtyFive'></div>" +
                               "<div class='form-group'> <label>6th Ingredient(currently: " + ingredientSixInfo + ") </label><select class='ingredUpdateType' id='updateIngredientSix'></select>" +
                               "<label>Qty(currently: " + quantitySixInfo + ")</label><input type='text' size='4' id='updateQtySix'></div>" +
-                              "<button class='btn btn-success' id='submitUpdateRecBtn'>Update</button>" +
-                              "<button class='btn btn-warning' id='displayRecListBtn'>Back to Recipes</button><div class='col-md-3'></div>");
+                              "<div class='form-group'><button class='btn btn-success' id='submitUpdateRecBtn'>Update</button>" +
+                              "<button class='btn btn-warning' id='displayRecListBtn'>Back to Recipes</button></div></div><div class='col-md-3'></div>");
 
         getUpdateIngredients();
         document.location.href = "#currentRecipeDisplay";
