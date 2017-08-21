@@ -377,8 +377,6 @@ function allLosses() {
   $("#dashboardDisplay").empty();
   $("#tableSubHead").empty();
   $("#tableTitle").html("<h2>All Losses</h2>")
-  //header function
-  displayallTransHeader();
   var tableRowHead = $("<tr>");
   // transaction Id column head
   var transactionIdHead = $("<th>");

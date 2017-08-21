@@ -180,6 +180,276 @@ $("#submit-sales").on("click", function() {
 
 // (29.45/165)*500 = 89.24
 
+mySales();
+
+//Display My Sales Transactions Table:
+function mySales() {
+  $("#mySalesDisplay").empty();
+  var tableRowHead = $("<tr>");
+  // transaction Id column head
+  var transactionIdHead = $("<th>");
+  transactionIdHead.addClass("tableRowHeadStyle");
+  transactionIdHead.text("ID");
+  tableRowHead.append(transactionIdHead);
+  // item sold type column head
+  var itemHead = $("<th>");
+  itemHead.addClass("tableRowHeadStyle");
+  itemHead.text("Beer");
+  tableRowHead.append(itemHead);
+  // pints sold column head
+  var pintsHead = $("<th>");
+  pintsHead.addClass("tableRowHeadStyle");
+  pintsHead.text("Pints");
+  tableRowHead.append(pintsHead);
+  // First ingredient column head
+  var firstIngredientHead = $("<th>");
+  firstIngredientHead.addClass("tableRowHeadStyle");
+  firstIngredientHead.text("Type");
+  tableRowHead.append(firstIngredientHead);
+
+  // Change amount column head
+  var changeOneHead = $("<th>");
+  changeOneHead.addClass("tableRowHeadStyle");
+  changeOneHead.text("Amt");
+  tableRowHead.append(changeOneHead);
+
+    // Second ingredient  column head
+  var secondIngredientHead = $("<th>");
+  secondIngredientHead.addClass("tableRowHeadStyle");
+  secondIngredientHead.text("Ingr.");
+  tableRowHead.append(secondIngredientHead);
+
+  // change amount column head
+  var changeTwoHead = $("<th>");
+  changeTwoHead.addClass("tableRowHeadStyle");
+  changeTwoHead.text("Amt");
+  tableRowHead.append(changeTwoHead);
+
+      // Third ingredient  column head
+  var thirdIngredientHead = $("<th>");
+  thirdIngredientHead.addClass("tableRowHeadStyle");
+  thirdIngredientHead.text("Ingr.");
+  tableRowHead.append(thirdIngredientHead);
+
+  // change amount column head
+  var changeThreeHead = $("<th>");
+  changeThreeHead.addClass("tableRowHeadStyle");
+  changeThreeHead.text("Amt");
+  tableRowHead.append(changeThreeHead);
+
+      // Fourth ingredient  column head
+  var fourthIngredientHead = $("<th>");
+  fourthIngredientHead.addClass("tableRowHeadStyle");
+  fourthIngredientHead.text("Ingr.");
+  tableRowHead.append(fourthIngredientHead);
+
+  // change amount column head
+  var changeFourHead = $("<th>");
+  changeFourHead.addClass("tableRowHeadStyle");
+  changeFourHead.text("Amt");
+  tableRowHead.append(changeFourHead);
+
+      // Five ingredient  column head
+  var fifthIngredientHead = $("<th>");
+  fifthIngredientHead.addClass("tableRowHeadStyle");
+  fifthIngredientHead.text("Ingr.");
+  tableRowHead.append(fifthIngredientHead);
+
+  // change amount column head
+  var changeFiveHead = $("<th>");
+  changeFiveHead.addClass("tableRowHeadStyle");
+  changeFiveHead.text("Amt");
+  tableRowHead.append(changeFiveHead);
+
+      // Sixth ingredient  column head
+  var sixthIngredientHead = $("<th>");
+  sixthIngredientHead.addClass("tableRowHeadStyle");
+  sixthIngredientHead.text("Ingr.");
+  tableRowHead.append(sixthIngredientHead);
+  // change amount column head
+  var changeSixHead = $("<th>");
+  changeSixHead.addClass("tableRowHeadStyle");
+  changeSixHead.text("Amt");
+  tableRowHead.append(changeSixHead);
+
+
+  //Display My Sales Table Body
+$.get("/api/userinfo", function(req) {
+$.get("/api/sales", function(request) {
+
+  console.log(request);
+  for (var i = 0; i < request.length; i++) {
+    if (req.id == request[i].UserId) {
+    var tableRow = $("<tr>");
+    //add transaction ID column
+    var transactionId = $("<td>");
+    transactionId.addClass("tableRowStyle");
+    transactionId.text(request[i].sale_id);
+    tableRow.append(transactionId);
+    // Beer Sold
+    var item = $("<td>");
+    item.addClass("tableRowStyle");
+    item.text(request[i].item_sold);
+    tableRow.append(item);
+    // Amount of Pints Sold
+    var pints = $("<td>");
+    pints.addClass("tableRowStyle");
+    pints.text(request[i].total_sales_units);
+    tableRow.append(pints);
+
+      //First Ingredient
+    var ingredientOne = $("<td>");
+    ingredientOne.addClass("tableRowStyle");
+    ingredientOne.text(request[i].ingredient_one);
+    tableRow.append(ingredientOne);
+
+
+     //Changed Amount
+    var oneSoldAmt = $("<td>");
+    oneSoldAmt.addClass("tableRowStyle");
+    oneSoldAmt.text(Math.round(request[i].amount_one_deducted * 100)/100);
+    tableRow.append(oneSoldAmt);
+
+  if(request[i].ingredient_two != null) {
+      //Second Ingredient
+    var ingredientTwo = $("<td>");
+    ingredientTwo.addClass("tableRowStyle");
+    ingredientTwo.text(request[i].ingredient_two);
+    tableRow.append(ingredientTwo);
+  } else {
+    var ingredientTwo = $("<td>");
+    ingredientTwo.addClass("tableRowStyle");
+    ingredientTwo.text("");
+    tableRow.append(ingredientTwo);
+  }
+
+  if(request[i].ingredient_two != null) {
+     //Changed Amount
+    var twoSoldAmt = $("<td>");
+    twoSoldAmt.addClass("tableRowStyle");
+    twoSoldAmt.text(Math.round(request[i].amount_two_deducted * 100)/100);
+    tableRow.append(twoSoldAmt);
+  } else {
+    var twoSoldAmt = $("<td>");
+    twoSoldAmt.addClass("tableRowStyle");
+    twoSoldAmt.text("");
+    tableRow.append(twoSoldAmt);
+  }
+
+    if(request[i].ingredient_three != null) {
+      //Third Ingredient
+    var ingredientThree = $("<td>");
+    ingredientThree.addClass("tableRowStyle");
+    ingredientThree.text(request[i].ingredient_three);
+    tableRow.append(ingredientThree);
+  } else {
+    var ingredientThree = $("<td>");
+    ingredientThree.addClass("tableRowStyle");
+    ingredientThree.text("");
+    tableRow.append(ingredientThree);
+  }
+
+  if(request[i].ingredient_three != null) {
+     //Changed Amount
+    var threeSoldAmt = $("<td>");
+    threeSoldAmt.addClass("tableRowStyle");
+    threeSoldAmt.text(Math.round(request[i].amount_three_deducted * 100)/100);
+    tableRow.append(threeSoldAmt);
+  } else {
+    var threeSoldAmt = $("<td>");
+    threeSoldAmt.addClass("tableRowStyle");
+    threeSoldAmt.text("");
+    tableRow.append(threeSoldAmt);
+  }
+
+    if(request[i].ingredient_four != null) {
+      //Fourth Ingredient
+    var ingredientFour = $("<td>");
+    ingredientFour.addClass("tableRowStyle");
+    ingredientFour.text(request[i].ingredient_four);
+    tableRow.append(ingredientFour);
+  } else {
+    var ingredientFour = $("<td>");
+    ingredientFour.addClass("tableRowStyle");
+    ingredientFour.text("");
+    tableRow.append(ingredientFour);
+  }
+
+  if(request[i].ingredient_four != null) {
+     //Changed Amount
+    var fourSoldAmt = $("<td>");
+    fourSoldAmt.addClass("tableRowStyle");
+    fourSoldAmt.text(Math.round(request[i].amount_four_deducted * 100)/100);
+    tableRow.append(fourSoldAmt);
+  } else {
+    var fourSoldAmt = $("<td>");
+    fourSoldAmt.addClass("tableRowStyle");
+    fourSoldAmt.text("");
+    tableRow.append(fourSoldAmt);
+  }
+
+    if(request[i].ingredient_five != null) {
+      //Fifth Ingredient
+    var ingredientFive = $("<td>");
+    ingredientFive.addClass("tableRowStyle");
+    ingredientFive.text(request[i].ingredient_five);
+    tableRow.append(ingredientFive);
+  } else {
+    var ingredientFive = $("<td>");
+    ingredientFive.addClass("tableRowStyle");
+    ingredientFive.text("");
+    tableRow.append(ingredientFive);
+  }
+
+  if(request[i].ingredient_five != null) {
+     //Changed Amount
+    var fiveSoldAmt = $("<td>");
+    fiveSoldAmt.addClass("tableRowStyle");
+    fiveSoldAmt.text(Math.round(request[i].amount_five_deducted * 100)/100);
+    tableRow.append(fiveSoldAmt);
+  } else {
+    var fiveSoldAmt = $("<td>");
+    fiveSoldAmt.addClass("tableRowStyle");
+    fiveSoldAmt.text("");
+    tableRow.append(fiveSoldAmt);
+  }
+
+    if(request[i].ingredient_six != null) {
+      //Sixth Ingredient
+    var ingredientSix = $("<td>");
+    ingredientSix.addClass("tableRowStyle");
+    ingredientSix.text(request[i].ingredient_six);
+    tableRow.append(ingredientSix);
+  } else {
+    var ingredientSix = $("<td>");
+    ingredientSix.addClass("tableRowStyle");
+    ingredientSix.text("");
+    tableRow.append(ingredientSix);
+  }
+
+  if(request[i].ingredient_six != null) {
+     //Changed Amount
+    var sixSoldAmt = $("<td>");
+    sixSoldAmt.addClass("tableRowStyle");
+    sixSoldAmt.text(Math.round(request[i].amount_six_deducted * 100)/100);
+    tableRow.append(sixSoldAmt);
+  } else {
+    var sixSoldAmt = $("<td>");
+    sixSoldAmt.addClass("tableRowStyle");
+    sixSoldAmt.text("");
+    tableRow.append(sixSoldAmt);
+  }
+
+
+    $("#mySalesDisplay").prepend(tableRow);
+    $("#mySalesDisplay").prepend(tableRowHead);
+    // focus on table display
+    // document.location.href = "#mySalesDisplay";
+  }
+  }
+});
+});
+} //End My Sales
 
 
 function updateIngredient(info) {
@@ -203,6 +473,7 @@ function createSale(info) {
         console.log("Yay Created");
         $("#salesMessage").html("<p>Submission Successful!</p>")
         $("#pintsSold").val("");
+        mySales();
     });
 }
 

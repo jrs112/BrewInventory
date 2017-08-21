@@ -10,7 +10,7 @@ module.exports = function(app) {
   // update quanity
 
   //Create Reciept of goods for a user
-	app.post("/api/newvendorMaster", function(req, res) {
+	app.post("/vendor", function(req, res) {
     console.log(req.body);
     db.VendorMaster.create({
       vendorname: req.body.vendorname,
@@ -21,7 +21,8 @@ module.exports = function(app) {
       state: req.body.state,
       zip: req.body.zip
     }).then(function(vendors) {
-      res.redirect("/vendor");
+      var server_message = "Vendor Created!";
+      res.render("vendor", {server_message});
     });
 
   });//end of create

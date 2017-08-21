@@ -52,6 +52,75 @@ $("#submitReceipt").on("click", function(event) {
     });
 });
 
+myReceiptTable();
+
+//Display My Receipt Transactions Table:
+function myReceiptTable() {
+  $("#myReceiptsDisplay").empty();
+  $("#tableTitle").html("<h2>My Receipt Transactions</h2>")
+  var tableRowHead = $("<tr>");
+  // transaction Id column head
+  var transactionIdHead = $("<th>");
+  transactionIdHead.addClass("tableRowHeadStyle");
+  transactionIdHead.text("ID");
+  tableRowHead.append(transactionIdHead);
+  // ingredient type column head
+  var itemHead = $("<th>");
+  itemHead.addClass("tableRowHeadStyle");
+  itemHead.text("Ingredient");
+  tableRowHead.append(itemHead);
+  // Amount column head
+  var amountHead = $("<th>");
+  amountHead.addClass("tableRowHeadStyle");
+  amountHead.text("Amount(lbs)");
+  tableRowHead.append(amountHead);
+  // Vendor column head
+  var vendorHead = $("<th>");
+  vendorHead.addClass("tableRowHeadStyle");
+  vendorHead.text("Vendor");
+  tableRowHead.append(vendorHead);
+
+
+  $("#myReceiptsDisplay").append(tableRowHead);
+
+  //Display My Sales Table Body
+$.get("/api/userinfo", function(req) {
+$.get("/api/receipt", function(request) {
+
+  console.log(request);
+  for (var i = 0; i < request.length; i++) {
+    if (req.id == request[i].UserId) {
+    var tableRow = $("<tr>");
+    //add transaction ID column
+    var transactionId = $("<td>");
+    transactionId.addClass("tableRowStyle");
+    transactionId.text(request[i].receipt_id);
+    tableRow.append(transactionId);
+    // Ingredient Received
+    var item = $("<td>");
+    item.addClass("tableRowStyle");
+    item.text(request[i].ingredient);
+    tableRow.append(item);
+    // Amount of Ingredients Received
+    var amount = $("<td>");
+    amount.addClass("tableRowStyle");
+    amount.text(request[i].quantity);
+    tableRow.append(amount);
+
+      //Vendor
+    var vendor = $("<td>");
+    vendor.addClass("tableRowStyle");
+    vendor.text(request[i].VendorMaster.vendorname);
+    tableRow.append(vendor);
+
+    $("#myReceiptsDisplay").append(tableRow);
+    // focus on table display
+    // document.location.href = "#dashboardDisplay";
+  }
+  }
+});
+});
+} //End My Receipts
 
 
 function updateIngredient(info) {
@@ -75,6 +144,7 @@ function createReceipt(info) {
     })
     .done(function() {
         console.log("Yay Created");
+        myReceiptTable();
 
     });
 }
