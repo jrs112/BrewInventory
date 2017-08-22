@@ -4,6 +4,7 @@ var exphbs = require('express-handlebars');
 var session = require("express-session");
 var expressValidator = require('express-validator');
 var passport   = require('passport');
+var flash = require("connect-flash");
 
 
 
@@ -26,8 +27,14 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-// We need to use sessions to keep track of our user's login status
+app.use(flash());
 
+app.use(function(req, res, next) {
+    res.locals.success_msg = req.flash("success_msg");
+    res.locals.error_msg = req.flash("error_msg");
+    res.locals.error = req.flash("error");
+    next();
+})
 
 //Handlebars config
 app.engine('handlebars', exphbs({
@@ -35,6 +42,8 @@ app.engine('handlebars', exphbs({
 }));
 
 app.set('view engine', 'handlebars');
+
+
 
 // Requiring our routes
 require("./controllers/routes/recipeRoutes.js")(app);

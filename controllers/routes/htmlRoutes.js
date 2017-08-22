@@ -30,7 +30,7 @@ module.exports = function(app, passport) {
         res.render("login");
     });
 
-    app.post('/memberauth', passport.authenticate('user-local-signup', {
+    app.post('/memberauth', mainRegisterCheck, passport.authenticate('user-local-signup', {
         successRedirect: '/dashboard',
 
         failureRedirect: '/'
@@ -38,7 +38,7 @@ module.exports = function(app, passport) {
 
     ));
 
-    app.post('/memberauthcreate', passport.authenticate('user-local-create', {
+    app.post('/memberauthcreate',createRegisterCheck, passport.authenticate('user-local-create', {
         successRedirect: '/',
 
         failureRedirect: '/user'
@@ -49,10 +49,13 @@ module.exports = function(app, passport) {
     app.post('/signin', passport.authenticate('local-signin', {
         successRedirect: '/dashboard',
 
-        failureRedirect: '/'
-    }
+        failureRedirect: '/',
 
-    ));
+        failureFlash: true
+    }),
+    function(req, res) {
+        res.redirect("/dashboard");
+    });
 }
 
 function isAdmin(req, res, next) {
@@ -81,4 +84,40 @@ function isLoggedIn(req, res, next) {
         return next();
     }
     res.redirect('/');
+}
+
+function mainRegisterCheck(req, res, next) {
+    req.checkBody("firstName", "First Name is required").notEmpty();
+    req.checkBody("lastName", "Last Name is required").notEmpty();
+    req.checkBody("email", "Email is required").notEmpty();
+    req.checkBody("email", "Email is not valid").isEmail();
+    req.checkBody("password", "Password is required").notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        res.render('login', {
+            errors: errors
+        });
+    } else{
+        return next();
+    }
+}
+
+function createRegisterCheck(req, res, next) {
+    req.checkBody("firstName", "First Name is required").notEmpty();
+    req.checkBody("lastName", "Last Name is required").notEmpty();
+    req.checkBody("email", "Email is required").notEmpty();
+    req.checkBody("email", "Email is not valid").isEmail();
+    req.checkBody("password", "Password is required").notEmpty();
+
+    var errors = req.validationErrors();
+
+    if (errors) {
+        res.render('users', {
+            errors: errors
+        });
+    } else{
+        return next();
+    }
 }

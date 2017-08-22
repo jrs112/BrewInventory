@@ -18,10 +18,22 @@
                   <input type="password" name="password" class="form-control" id="loginpassword" placeholder="Password">
                 </div>
                 <input class="btn btn-success" type="submit" value="Sign In" />
+
             </form>
           </div>
         </div>
       </div>
+      {{#if errors}}
+        {{#each errors}}
+          <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+      {{/if}}
+      {{#if error_msg}}
+        <div class="alert alert-danger">{{error_msg}}</div>
+      {{/if}}
+      {{#if error}}
+        <div class="alert alert-danger">{{error}}</div>
+      {{/if}}
     </div>
   </div>
 </div>
