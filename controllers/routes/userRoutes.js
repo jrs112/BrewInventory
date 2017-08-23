@@ -1,10 +1,39 @@
 var db = require("../../models");
+var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function(app) {
 //Get info of user currently logged in
 app.get("/api/userinfo", function(req, res) {
     res.json(req.user);
   });
+
+//Update previous
+app.put("/api/previoususer", function(req, res) {
+    var generateHash = function(password) {
+
+        return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
+
+        };
+    var hashPassword = generateHash(req.body.password);
+    var updateInfo = {
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        password: hashPassword,
+        role: req.body.role,
+        active: req.body.active
+    }
+    db.User.update(
+    updateInfo,
+    {
+        where: {
+            id: req.body.id
+        }
+    }).then(function(users) {
+        res.json(users);
+
+    });
+});
 
 //Update user
 app.put("/api/user", function(req, res) {

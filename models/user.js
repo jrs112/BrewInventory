@@ -31,6 +31,10 @@ module.exports = function(sequelize, DataTypes) {
     transaction_counter: {
         type: DataTypes.INTEGER,
         defaultValue: 0
+    },
+    active: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     }
 });
     return User;

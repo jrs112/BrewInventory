@@ -130,6 +130,11 @@ th {
   margin-right: 5px;
 }
 
+#allFileLinkDiv {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+
 /*Current Inventory and Future inventory Table(on Dashboard)*/
 .dangerLevel {
     background: yellow;

@@ -471,6 +471,11 @@ function displayallTransHeader() {
       $("#tableSubHead").append(ingredient);
       $("#ingredient-" + i).append("<span class='viewIngredient' data-id='" + req[i].id + "' data-name='" + req[i].ingredient + "'>" + req[i].ingredient + ", </span>");
     }
+    var allFileLink = $("<div>");
+    allFileLink.addClass("allFileLinkStyle")
+    allFileLink.attr("id", "allFileLinkDiv");
+    $("#tableSubHead").append(allFileLink);
+    $("#allFileLinkDiv").append("<a href='#' onclick='downloadAllCSV()'>Download All Transactions</a>");
 
       $(".viewIngredient").on("click", function() {
         var selectedIngredient = $(this).attr("data-name");
@@ -1123,6 +1128,10 @@ function currentInventory() {
   $("#dashboardDisplay").empty();
   $("#tableSubHead").empty();
   $("#tableTitle").html("<h2>Current Inventory</h2>")
+  var currentFileLink = $("<div>");
+    currentFileLink.attr("id", "currentFileLinkDiv");
+    $("#tableSubHead").append(currentFileLink);
+    $("#currentFileLinkDiv").append("<a href='#' onclick='downloadCurrentCSV()'>Download Current Inventory</a>");
   var tableRowHead = $("<tr>");
   // ingredient column head
   var ingredientHead = $("<th>");
@@ -1593,7 +1602,149 @@ $.get("/api/ingredients", function(request) {
 
 
 
+    //Function for converting data to csv
+function convertArrayOfObjectsToCSV(args) {
+    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
+    data = args.data || null;
+    if (data == null || !data.length) {
+        return null;
+    }
+
+    columnDelimiter = args.columnDelimiter || ',';
+    lineDelimiter = args.lineDelimiter || '\n';
+
+    keys = Object.keys(data[0]);
+
+    result = '';
+    result += keys.join(columnDelimiter);
+    result += lineDelimiter;
+
+    data.forEach(function(item) {
+        ctr = 0;
+        keys.forEach(function(key) {
+            if (ctr > 0) result += columnDelimiter;
+
+            result += item[key];
+            ctr++;
+        });
+        result += lineDelimiter;
+    });
+
+    return result;
+}
+
+function downloadAllCSV() {
+var allTransData = [];
+$.get("/api/transaction", function(data) {
+  for (var i = 0; i < data.length; i++) {
+    var transInfo = {
+      ID: data[i].transaction_id,
+      EnteredBy: data[i].User.first_name + " " + data[i].User.last_name,
+      TransactionType: data[i].transaction_type,
+      Ingredient: data[i].ingredient,
+      StartAmount: data[i].start_amount,
+      AmountChanged: data[i].amount_changed,
+      EndAmount: data[i].end_amount
+    }
+    allTransData.push(transInfo);
+  }
+  console.log(allTransData);
+
+var data, filename, link;
+var csv = convertArrayOfObjectsToCSV({
+data: allTransData
+});
+if (csv == null)
+return;
+
+filename = 'alltransactions.csv';
+
+var blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
+
+if (navigator.msSaveBlob)
+{ // IE 10+
+navigator.msSaveBlob(blob, filename)
+}
+else
+{
+var link = document.createElement("a");
+if (link.download !== undefined)
+{
+
+// feature detection, Browsers that support HTML5 download attribute
+var url = URL.createObjectURL(blob);
+link.setAttribute("href", url);
+link.setAttribute("download", filename);
+link.style = "visibility:hidden";
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+}
+}
+});
+}
+
+function downloadCurrentCSV() {
+var currentTransData = [];
+$.get("/api/ingredients", function(data) {
+  for (var i = 0; i < data.length; i++) {
+    var quantityCheckWarn = "";
+    if (data[i].quantity < 250) {
+      quantityCheckWarn = "YES";
+    }
+    var quantityCheckDanger = "";
+    if (data[i].quantity < 100) {
+      quantityCheckDanger = "YES";
+    }
+    var belowZero = ""
+    if (data[i].quantity < 0) {
+      belowZero = "YES"
+    }
+    var transInfo = {
+      Ingredient: data[i].ingredient,
+      Current_QTY_lbs: data[i].quantity,
+      Below_250: quantityCheckWarn,
+      Below_100: quantityCheckDanger,
+      Below_0: belowZero
+    }
+    currentTransData.push(transInfo);
+  }
+  console.log(currentTransData);
+
+var data, filename, link;
+var csv = convertArrayOfObjectsToCSV({
+data: currentTransData
+});
+if (csv == null)
+return;
+
+filename = 'current_inventory.csv';
+
+var blob = new Blob([csv], {type: "text/csv;charset=utf-8;"});
+
+if (navigator.msSaveBlob)
+{ // IE 10+
+navigator.msSaveBlob(blob, filename)
+}
+else
+{
+var link = document.createElement("a");
+if (link.download !== undefined)
+{
+
+// feature detection, Browsers that support HTML5 download attribute
+var url = URL.createObjectURL(blob);
+link.setAttribute("href", url);
+link.setAttribute("download", filename);
+link.style = "visibility:hidden";
+document.body.appendChild(link);
+link.click();
+document.body.removeChild(link);
+}
+}
+});
+}
 
 
 function updateFutureRecipe(info) {

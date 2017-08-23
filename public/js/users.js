@@ -42,7 +42,7 @@ $.get("/api/users", function(request) {
       $("#currentUsersDisplay").append(tableRowOne);
 
     for (var i = 0; i < request.length; i++) {
-
+      if (request[i].active == true) {
 
       var tableRow = $("<tr>");
       //first name column
@@ -90,15 +90,17 @@ $.get("/api/users", function(request) {
       $("#currentUsersDisplay").append(tableRow);
 
     }
+  }
 
     $(".deleteBtn").on("click", function(event) {
             event.preventDefault();
             console.log($(this).attr("data-id"));
             var delUserID = {
                 id: $(this).attr("data-id"),
+                active: false
             };
             console.log(delUserID);
-            deleteUser(delUserID);
+            updateUser(delUserID);
 
         });
 
@@ -173,7 +175,31 @@ $.get("/api/users", function(request) {
   });
 });
 
-}
+}// End of Display User Talble
+
+$("#createUserBtn").on("click", function() {
+  var oldUserEmail = $("#oldUserEmail").val().trim();
+  var oldUserFirst = $("#oldUserFirst").val().trim();
+  var oldUserLast = $("#oldUserLast").val().trim();
+  var oldUserPass = $("#oldUserPass").val().trim();
+  var oldRoleType = $("#roleType").val().trim();
+  $.get("/api/users", function(data) {
+    for (var i = 0; i < data.length; i++) {
+      if (data[i].email == oldUserEmail) {
+        var oldUserInfo = {
+          id: data[i].id,
+          first_name: oldUserFirst,
+          last_name: oldUserLast,
+          email: oldUserEmail,
+          password: oldUserPass,
+          role: oldRoleType,
+          active: true
+        }
+        updatePreviousUser(oldUserInfo);
+      }
+    }
+  });
+});
 
 function deleteUser(info) {
     $.ajax({
@@ -193,6 +219,19 @@ function updateUser(info) {
     $.ajax({
       method: "PUT",
       url: "/api/user",
+      data: info
+    })
+    .done(function() {
+        console.log("Updated!");
+        displayUserTable();
+        document.location.href = "#currentUsersDisplay";
+    });
+  }
+
+  function updatePreviousUser(info) {
+    $.ajax({
+      method: "PUT",
+      url: "/api/previoususer",
       data: info
     })
     .done(function() {
