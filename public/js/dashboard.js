@@ -1233,7 +1233,7 @@ $.get("/api/ingredients", function(request) {
 function displayFutureHeader() {
   $.get("/api/recipe", function(req) {
   $.get("/api/userinfo", function(user) {
-    $("#tableSubHead").append("<h3>Current Projected Weekly Sales: </h3>");
+    $("#tableSubHead").append("<h3>Update Projected Weekly Sales: </h3>");
     for (var i = 0; i < req.length; i++) {
       var recipe = $("<span>");
       recipe.attr("id", "recipeSales-" + i);
@@ -1254,7 +1254,7 @@ function displayFutureHeader() {
         };
 
         $("#tableSubHead").append(updateDisplay);
-        $("#updateSalesWell").append("<h3>Update Weekly Projected Sales for " + selectedItem.item +
+        $("#updateSalesWell").append("<h3>Update Projected Weekly Sales for " + selectedItem.item +
                                     " (currently: " + selectedItem.projectedSale + ")</h3>" +
                                     "<div class='form-group'> <label>New Weekly Sales Amount (pints):  </label> <input type='text' size='3' id='newSalesAmt'></div>" +
                                     "<button id='submitUpdate' class='btn btn-primary'>Update</button><button id='cancelSaleUpdate' class='btn btn-warning'>Back</button>");

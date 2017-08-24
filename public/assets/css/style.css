@@ -1,6 +1,6 @@
 body {
 	background-image: url("../background.png");
-  	background-size: cover;
+  background-size: cover;
   }
 
  h1 {
@@ -111,6 +111,10 @@ th {
     background-color: rgba(174, 151, 128, 0.5);
 }
 
+.updateUserHead {
+  font-family: 'Permanent Marker', cursive;
+  font-style: italic;
+}
 
 /*Dashboard page*/
 
@@ -153,7 +157,9 @@ th {
   margin-right: 5px;
 }
 .updateRecHeader {
-  font-family: 'Lora', serif;
+  font-family: 'Permanent Marker', cursive;
+  font-style: italic;
+  font-size: 35px;
 }
 #submitUpdateRecBtn {
   margin-right: 7px;
