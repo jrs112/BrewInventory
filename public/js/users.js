@@ -119,8 +119,8 @@ $.get("/api/users", function(request) {
               var wellSection = $("<div>");
               wellSection.attr("id", "userWell");
               $("#currentUsersDisplay").append(wellSection);
-              $("#userWell").append("<div class='col-md-3'></div><div class='col-md-6'><div class='well'><h2 class='header'>Update: " + data.first_name + " " + data.last_name + "</h2>" +
-                                    "<h3 class='header'>Email: " + data.email + "</h3><h3 class='header'>Role: " + data.role + "</h3>" +
+              $("#userWell").append("<div class='col-md-3'></div><div class='col-md-6'><div class='well'><h2 class='header updateUserHead'>Update: " + data.first_name + " " + data.last_name + "</h2>" +
+                                    "<h3 class='header updateUserHead'>Email: " + data.email + "</h3><h3 class='header updateUserHead'>Role: " + data.role + "</h3>" +
 
                                     "<div class='form-group'> <label>Update First Name: </label><input type='text' class='form-control' id='firstNameInfo'></div>" +
                                     "<div class='form-group'> <label>Update Last Name: </label><input type='text' class='form-control' id='lastNameInfo'></div>" +

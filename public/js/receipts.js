@@ -80,9 +80,6 @@ function myReceiptTable() {
   vendorHead.text("Vendor");
   tableRowHead.append(vendorHead);
 
-
-  $("#myReceiptsDisplay").append(tableRowHead);
-
   //Display My Sales Table Body
 $.get("/api/userinfo", function(req) {
 $.get("/api/receipt", function(request) {
@@ -113,7 +110,8 @@ $.get("/api/receipt", function(request) {
     vendor.text(request[i].VendorMaster.vendorname);
     tableRow.append(vendor);
 
-    $("#myReceiptsDisplay").append(tableRow);
+    $("#myReceiptsDisplay").prepend(tableRow);
+    $("#myReceiptsDisplay").prepend(tableRowHead);
     // focus on table display
     // document.location.href = "#dashboardDisplay";
   }
