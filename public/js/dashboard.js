@@ -711,9 +711,6 @@ function myReceipts() {
   vendorHead.text("Vendor");
   tableRowHead.append(vendorHead);
 
-
-  $("#dashboardDisplay").append(tableRowHead);
-
   //Display My Sales Table Body
 $.get("/api/userinfo", function(req) {
 $.get("/api/receipt", function(request) {
@@ -744,7 +741,8 @@ $.get("/api/receipt", function(request) {
     vendor.text(request[i].VendorMaster.vendorname);
     tableRow.append(vendor);
 
-    $("#dashboardDisplay").append(tableRow);
+    $("#dashboardDisplay").prepend(tableRow);
+    $("#dashboardDisplay").prepend(tableRowHead);
     // focus on table display
     // document.location.href = "#dashboardDisplay";
   }
@@ -849,9 +847,6 @@ function mySales() {
   changeSixHead.addClass("tableRowHeadStyle");
   changeSixHead.text("Amt");
   tableRowHead.append(changeSixHead);
-
-
-  $("#dashboardDisplay").append(tableRowHead);
 
   //Display My Sales Table Body
 $.get("/api/userinfo", function(req) {
@@ -1021,7 +1016,8 @@ $.get("/api/sales", function(request) {
   }
 
 
-    $("#dashboardDisplay").append(tableRow);
+    $("#dashboardDisplay").prepend(tableRow);
+    $("#dashboardDisplay").prepend(tableRowHead);
     // focus on table display
     // document.location.href = "#dashboardDisplay";
   }
