@@ -11,10 +11,7 @@ app.post("/api/transaction", function(req, res) {
 //Get All Transaction
  app.get("/api/transaction", function(req, res) {
         var query= {};
-        db.Transaction.findAll({
-            include: [db.User],
-            where: query
-        }).then(function(transaction) {
+        db.Transaction.findAll().then(function(transaction) {
             res.json(transaction);
         });
     });

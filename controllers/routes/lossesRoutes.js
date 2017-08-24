@@ -4,10 +4,7 @@ module.exports = function(app) {
     //find all the entrys in the losses db
      app.get("/api/losses", function(req, res) {
         var query = {};
-        db.Losses.findAll({
-          include: [db.User],
-          where: query
-        }).then(function(losses) {
+        db.Losses.findAll().then(function(losses) {
             res.json(losses);
         });
     });//end of find all

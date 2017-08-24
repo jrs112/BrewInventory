@@ -61,11 +61,7 @@ function myLosses() {
   transactionIdHead.addClass("tableRowHeadStyle");
   transactionIdHead.text("ID");
   tableRowHead.append(transactionIdHead);
-    // Entered By  column head
-  var userHead = $("<th>");
-  userHead.addClass("tableRowHeadStyle");
-  userHead.text("Entered By");
-  tableRowHead.append(userHead);
+
   // ingredient column head
   var ingredientHead = $("<th>");
   ingredientHead.addClass("tableRowHeadStyle");
@@ -96,11 +92,6 @@ $.get("/api/losses", function(request) {
     transactionId.addClass("tableRowStyle");
     transactionId.text(request[i].transaction_id);
     tableRow.append(transactionId);
-    // Entered By
-    var type = $("<td>");
-    type.addClass("tableRowStyle");
-    type.text(request[i].User.first_name + " " + request[i].User.last_name);
-    tableRow.append(type);
     // Transaction Type
     var ingredient = $("<td>");
     ingredient.addClass("tableRowStyle");

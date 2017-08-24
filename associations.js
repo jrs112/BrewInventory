@@ -10,6 +10,5 @@ module.exports = function(db) {
   // db.OnHand.hasMany(db.Receipt, { onDelete: "cascade" });
   db.Losses.belongsTo(db.User, { foreignKey: { allowNull: false } });
   db.Receipt.belongsTo(db.User, { foreignKey: { allowNull: false } });
-  db.Receipt.belongsTo(db.VendorMaster, { foreignKey: { allowNull: false } });
-  db.VendorMaster.hasMany(db.Receipt, { onDelete: "cascade" });
+
 }

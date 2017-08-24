@@ -9,7 +9,13 @@ $.get("/api/users", function(request) {
   $.get("/api/userinfo", function(req) {
   console.log(request);
 
-      var tableRowOne = $("<tr>");;
+      var tableRowOne = $("<tr>");
+      var idHead = $("<th>");
+      idHead.addClass("tableRowHeadStyle");
+      idHead.text("ID")
+      tableRowOne.append(idHead)
+
+
       var firstNameHead = $("<th>");
       firstNameHead.addClass("tableRowHeadStyle");
       firstNameHead.text("First Name")
@@ -45,6 +51,11 @@ $.get("/api/users", function(request) {
       if (request[i].active == true) {
 
       var tableRow = $("<tr>");
+      //id column
+      var idcol = $("<td>");
+      idcol.addClass("tableRowStyle");
+      idcol.append(request[i].id);
+      tableRow.append(idcol);
       //first name column
       var firstName = $("<td>");
       firstName.addClass("tableRowStyle");

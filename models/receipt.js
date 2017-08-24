@@ -11,6 +11,10 @@ module.exports = function(sequelize, DataTypes) {
     quantity: {
       type: DataTypes.FLOAT,
       allowNull: false
+    },
+    vendor: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
   });
 

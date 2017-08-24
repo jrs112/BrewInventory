@@ -1,7 +1,7 @@
 $.get("/api/vendors", function(req) {
     console.log(req);
     for (var i = 0; i < req.length; i++) {
-        $("#vendor-input").append("<option value='" + req[i].id + "'>" + req[i].vendorname + "</option>");
+        $("#vendor-input").append("<option value='" + req[i].vendorname + "'>" + req[i].vendorname + "</option>");
     }
 });
 
@@ -29,7 +29,7 @@ $("#submitReceipt").on("click", function(event) {
             "quantity": chosenAmount,
             "UserId": user.id,
             "receipt_id": transactionId,
-            "VendorMasterId": chosenVendor
+            "vendor": chosenVendor
         };
         $.get("/api/ingredients", function(request) {
             for (var i = 0; i < request.length; i++) {
@@ -107,7 +107,7 @@ $.get("/api/receipt", function(request) {
       //Vendor
     var vendor = $("<td>");
     vendor.addClass("tableRowStyle");
-    vendor.text(request[i].VendorMaster.vendorname);
+    vendor.text(request[i].vendor);
     tableRow.append(vendor);
 
     $("#myReceiptsDisplay").prepend(tableRow);
@@ -130,7 +130,7 @@ function updateIngredient(info) {
     .done(function() {
         console.log("Yay Success");
         $("#qtyRec").val("");
-        $("#receiptMessage").html("<p>Submission Successful!</p>");
+        $("#receiptMessage").html("<p><strong>Submission Successful!</strong></p>");
     });
 }
 

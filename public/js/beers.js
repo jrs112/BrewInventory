@@ -91,7 +91,7 @@ function createIngredient(info) {
         getUpdateIngredients();
         $("#ingredientName").val("");
         $("#ingredientAmount").val("");
-        $("#ingrediantMessageDisplay").html("<p>Saved! You can now select this ingredient for your recipe!</p>");
+        $("#ingrediantMessageDisplay").html("<p><strong>Saved! You can now select this ingredient for your recipe!</strong></p>");
     });
 }
 

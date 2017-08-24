@@ -4,10 +4,7 @@ module.exports = function(app) {
     //find all the entrys in the reciept db
      app.get("/api/receipt", function(req, res) {
         var query = {};
-        db.Receipt.findAll({
-          include: [db.User, db.VendorMaster],
-          where: query
-        }).then(function(teams) {
+        db.Receipt.findAll().then(function(teams) {
             res.json(teams);
         });
     });

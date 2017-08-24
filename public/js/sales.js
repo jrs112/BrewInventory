@@ -471,7 +471,7 @@ function createSale(info) {
     })
     .done(function() {
         console.log("Yay Created");
-        $("#salesMessage").html("<p>Submission Successful!</p>")
+        $("#salesMessage").html("<p><strong>Submission Successful!</strong></p>")
         $("#pintsSold").val("");
         mySales();
     });

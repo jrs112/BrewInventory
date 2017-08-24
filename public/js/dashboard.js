@@ -39,7 +39,7 @@ function allReceipts() {
    // ingredient type column head
   var userHead = $("<th>");
   userHead.addClass("tableRowHeadStyle");
-  userHead.text("Entered By");
+  userHead.text("User ID");
   tableRowHead.append(userHead);
   // ingredient type column head
   var itemHead = $("<th>");
@@ -57,7 +57,7 @@ function allReceipts() {
   vendorHead.text("Vendor");
   tableRowHead.append(vendorHead);
 
-  //Display My Sales Table Body
+  //Display all receipts Table Body
 $.get("/api/userinfo", function(req) {
 $.get("/api/receipt", function(request) {
 
@@ -72,7 +72,7 @@ $.get("/api/receipt", function(request) {
     // Entered By
     var user = $("<td>");
     user.addClass("tableRowStyle");
-    user.text(request[i].User.first_name + " " + request[i].User.last_name);
+    user.text(request[i].UserId);
     tableRow.append(user);
     // Ingredient Received
     var item = $("<td>");
@@ -88,7 +88,7 @@ $.get("/api/receipt", function(request) {
       //Vendor
     var vendor = $("<td>");
     vendor.addClass("tableRowStyle");
-    vendor.text(request[i].VendorMaster.vendorname);
+    vendor.text(request[i].vendor);
     tableRow.append(vendor);
 
     $("#dashboardDisplay").prepend(tableRow);
@@ -386,7 +386,7 @@ function allLosses() {
     // Entered By  column head
   var userHead = $("<th>");
   userHead.addClass("tableRowHeadStyle");
-  userHead.text("Entered By");
+  userHead.text("User ID");
   tableRowHead.append(userHead);
   // ingredient column head
   var ingredientHead = $("<th>");
@@ -419,7 +419,7 @@ $.get("/api/losses", function(request) {
     // Entered By
     var type = $("<td>");
     type.addClass("tableRowStyle");
-    type.text(request[i].User.first_name + " " + request[i].User.last_name);
+    type.text(request[i].UserId);
     tableRow.append(type);
     // Transaction Type
     var ingredient = $("<td>");
@@ -490,7 +490,7 @@ function displayallTransHeader() {
           // Entered By  column head
         var userHead = $("<th>");
         userHead.addClass("tableRowHeadStyle");
-        userHead.text("Entered By");
+        userHead.text("User ID");
         tableRowHead.append(userHead);
         // transaction type column head
         var typeHead = $("<th>");
@@ -534,7 +534,7 @@ function displayallTransHeader() {
           // Entered By
           var type = $("<td>");
           type.addClass("tableRowStyle");
-          type.text(request[i].User.first_name + " " + request[i].User.last_name);
+          type.text(request[i].UserId);
           tableRow.append(type);
           // Transaction Type
           var type = $("<td>");
@@ -597,7 +597,7 @@ function allTransactions() {
     // Entered By  column head
   var userHead = $("<th>");
   userHead.addClass("tableRowHeadStyle");
-  userHead.text("Entered By");
+  userHead.text("User ID");
   tableRowHead.append(userHead);
   // transaction type column head
   var typeHead = $("<th>");
@@ -640,7 +640,7 @@ $.get("/api/transaction", function(request) {
     // Entered By
     var type = $("<td>");
     type.addClass("tableRowStyle");
-    type.text(request[i].User.first_name + " " + request[i].User.last_name);
+    type.text(request[i].UserId);
     tableRow.append(type);
     // Transaction Type
     var type = $("<td>");
@@ -738,7 +738,7 @@ $.get("/api/receipt", function(request) {
       //Vendor
     var vendor = $("<td>");
     vendor.addClass("tableRowStyle");
-    vendor.text(request[i].VendorMaster.vendorname);
+    vendor.text(request[i].vendor);
     tableRow.append(vendor);
 
     $("#dashboardDisplay").prepend(tableRow);
@@ -1036,7 +1036,7 @@ function myTransactions() {
   // transaction Id column head
   var transactionIdHead = $("<th>");
   transactionIdHead.addClass("tableRowHeadStyle");
-  transactionIdHead.text("Transaction ID");
+  transactionIdHead.text("ID");
   tableRowHead.append(transactionIdHead);
   // transaction type column head
   var typeHead = $("<th>");
