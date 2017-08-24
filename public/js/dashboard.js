@@ -1636,7 +1636,7 @@ $.get("/api/transaction", function(data) {
   for (var i = 0; i < data.length; i++) {
     var transInfo = {
       ID: data[i].transaction_id,
-      EnteredBy: data[i].User.first_name + " " + data[i].User.last_name,
+      EnteredBy: data[i].UserId,
       TransactionType: data[i].transaction_type,
       Ingredient: data[i].ingredient,
       StartAmount: data[i].start_amount,
